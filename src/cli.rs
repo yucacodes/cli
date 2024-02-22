@@ -3,7 +3,6 @@ use clap::Parser;
 #[derive(Parser, Debug)]
 #[clap(name = "yuca", version = "0.1.0", author = "Yuca Organizations", about = "A CLI tool for generating files")]
 struct Yuca {
-
     #[clap(subcommand)]
     cmd: Command,
 }
@@ -20,7 +19,7 @@ enum Command {
 
 #[derive(Parser, Debug)]
 struct GenerateCommand {
-    #[clap(short, long)]
+   #[clap(short, long, )]
     name: String,
 }
 
