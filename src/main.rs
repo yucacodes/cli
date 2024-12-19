@@ -8,14 +8,14 @@ fn main() {
 
     // Verificar que hay suficientes argumentos
     if args.len() < 5 {
-        eprintln!("Uso: {} cli_tool generate <tipo> <nombre_base>", args[0]);
+        eprintln!("Uso: {} yuca generate <tipo> <nombre_base>", args[0]);
         std::process::exit(1);
     }
 
     // Verificar la palabra clave
     let palabra_clave = &args[1];
-    if palabra_clave != "cli_tool" {
-        eprintln!("Error: la palabra clave debe ser 'cli_tool'.");
+    if palabra_clave != "yuca" {
+        eprintln!("Error: la palabra clave debe ser 'yuca'.");
         std::process::exit(1);
     }
 
@@ -38,13 +38,27 @@ fn main() {
 
 // Función para crear un template
 fn crear_template(tipo: &str, nombre_base: &str) {
-    let (extension, contenido) = match tipo {
-        "caso_de_uso" => ("usecase.ts", "// Caso de Uso\n\n/**\n * Descripción del caso de uso:\n * Actores:\n * Flujo principal:\n * Flujo alternativo:\n */\n"),
-        "modelo" => ("model.ts", "// Modelo\n\n/**\n * Representación de datos del modelo:\n * Atributos:\n * Relaciones:\n */\n"),
+    let template_path = match tipo {
+        "caso_de_uso" => "templates/caso_de_uso.txt",
+        "modelo" => "templates/model.txt",
         _ => {
             eprintln!("Error: tipo desconocido '{}'. Los tipos disponibles son: caso_de_uso, modelo.", tipo);
             std::process::exit(1);
         }
+    };
+
+    let contenido = match fs::read_to_string(template_path) {
+        Ok(contenido) => contenido,
+        Err(err) => {
+            eprintln!("Error al leer el template: {}", err);
+            std::process::exit(1);
+        }
+    };
+
+    let extension = match tipo {
+        "caso_de_uso" => "usecase.ts",
+        "modelo" => "model.ts",
+        _ => unreachable!(),
     };
 
     let nombre_archivo = format!("{}.{}", nombre_base, extension);

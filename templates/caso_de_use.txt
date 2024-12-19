@@ -1,0 +1,14 @@
+
+class UseCase {
+  constructor() {
+ 
+  }
+
+  async execute() {
+    try {
+      // Aqui va la logica del caso de uso
+    } catch (error) {
+      throw new Error('Error en el caso de uso');
+    }
+  }
+}

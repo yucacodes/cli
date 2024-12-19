@@ -1,0 +1,10 @@
+class Model {
+  name: string;
+  constructor() {
+    this.name = 'Model';
+  }
+
+  getName() {
+    return this.name;
+  }
+}
